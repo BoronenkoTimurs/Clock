@@ -22,5 +22,8 @@
   "homepage": "https://github.com/Freshman-tech/pomodoro#readme",
   "dependencies": {
     "browser-sync": "^2.26.12"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
   }
 }

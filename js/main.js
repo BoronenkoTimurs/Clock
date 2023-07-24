@@ -1,6 +1,6 @@
 const timer = {
-  work: 0.1,
-  shortBreak: 0.1,
+  work: 25,
+  shortBreak: 5,
   longBreak: 15,
   longBreakInerval: 4,
   sessions: 0,
@@ -44,7 +44,7 @@ function getRemainingTimer(endTime) {
 
 function startTimer() {
   let { total } = timer.remainingTime;
-  
+
   let nowDate = new Date();
   const endTime = Date.parse(nowDate) + total * 1000;
 
