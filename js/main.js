@@ -1,6 +1,6 @@
 const timer = {
-  work: 25,
-  shortBreak: 5,
+  work: 0.1,
+  shortBreak: 0.1,
   longBreak: 15,
   longBreakInerval: 4,
   sessions: 0,
@@ -44,7 +44,7 @@ function getRemainingTimer(endTime) {
 
 function startTimer() {
   let { total } = timer.remainingTime;
-  // Changed here
+  
   let nowDate = new Date();
   const endTime = Date.parse(nowDate) + total * 1000;
 
@@ -73,6 +73,12 @@ function startTimer() {
         default:
           switchMode("work");
       }
+      if (Notification.permission === "granted") {
+        const text =
+          timer.mode === "work" ? "Get back to work!" : "Take a break!";
+        new Notification(text);
+      }
+
       document.querySelector(`[data-sound="${timer.mode}"]`).play();
       startTimer();
     }
@@ -135,5 +141,19 @@ function handlerMode(event) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  if ("Notification" in window) {
+    if (
+      Notification.permission !== "granted" &&
+      Notification.permission !== "denied"
+    ) {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+          new Notification(
+            "Awesome! You will be notified at the start of each session"
+          );
+        }
+      });
+    }
+  }
   switchMode("work");
 });
