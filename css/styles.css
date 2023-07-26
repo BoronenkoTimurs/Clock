@@ -1,28 +1,40 @@
-
 html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
 }
 
 :root {
-  --white:#fff;
+  --white: #fff;
   --work: hsl(223, 25%, 40%);
   --shortBreak: hsl(48, 23%, 40%);
   --longBreak: hsl(105, 16%, 40%);
 }
 
 body {
-  background-color: var(--work);
+  /* TODO: fix overflow: hidden; (without it) */
+  overflow: hidden;
   transition: background-color 1s ease;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   user-select: none;
 }
 
+
+img {
+  /* TODO: Fix height and width of img (white line in bottom) */
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
 progress {
   border-radius: 2px;
   width: 100%;
@@ -32,7 +44,7 @@ progress {
 }
 
 progress::-webkit-progress-bar {
- background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 progress::-webkit-progress-value {
@@ -57,10 +69,10 @@ progress::-webkit-progress-value {
   font-family: arial, sans-serif;
 }
 @media screen and (max-width: 936px) {
-  .timer{
+  .timer {
     padding: 0;
   }
-  .clock{
+  .clock {
     font-size: clamp(5rem, 15.5vw, 15rem);
   }
 }
@@ -73,7 +85,6 @@ progress::-webkit-progress-value {
   font-weight: 300;
   color: var(--white);
   border: 1px solid transparent;
-  margin: 0px;
   border-radius: 4px;
   padding: 2px 12px;
   background: none;
@@ -99,11 +110,12 @@ progress::-webkit-progress-value {
   border-radius: 4px;
   transition: color 0.5s ease-in-out 0s;
 }
-.main-button:hover{
+.main-button:hover {
   color: white;
   background-color: black;
 }
-button:focus, button:active {
+button:focus,
+button:active {
   outline: none;
 }
 
@@ -116,5 +128,3 @@ button:focus, button:active {
 .hidden {
   display: none;
 }
-
-

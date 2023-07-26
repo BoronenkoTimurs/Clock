@@ -1,3 +1,4 @@
+let interval;
 const timer = {
   work: 25,
   shortBreak: 5,
@@ -5,7 +6,8 @@ const timer = {
   longBreakInerval: 4,
   sessions: 0,
 };
-let interval;
+const images = ["/image/chill.jpg", "/image/samurai.jpg"];
+const imgEl = document.getElementById("random_image");
 
 const buttonSound = new Audio("button-sound.mp3");
 const mainButtron = document.getElementById("js-btn");
@@ -108,6 +110,15 @@ function updateClock() {
   const text = timer.mode === "work" ? "Get back to work!" : "Take a break!";
   document.title = `${hours}:${minutes}:${seconds} - ${text}`;
 }
+function randomImage() {
+  const randomIndex = Math.floor(Math.random() * images.length);
+  if (randomIndex !== Number(localStorage.getItem("index"))) {
+    imgEl.src = images[randomIndex];
+    localStorage.setItem("index", randomIndex);
+  } else {
+    randomImage();
+  }
+}
 function switchMode(mode) {
   timer.mode = mode;
   timer.remainingTime = {
@@ -121,13 +132,17 @@ function switchMode(mode) {
     .querySelectorAll("button[data-mode]")
     .forEach((el) => el.classList.remove("active"));
   document.querySelector(`[data-mode= "${mode}"]`).classList.add("active");
-  document.body.style.backgroundColor = `var(--${mode})`;
+  imgEl.style.backgroundSize = "cover";
+  // TODO: put the pic in center
+  // imgEl.style.backgroundPositionX = 'top left'
+  // imgEl.style.backgroundAttachment = "fixed";
 
   document
     .getElementById("js-progress")
     .setAttribute("max", timer.remainingTime.total);
 
   updateClock();
+  randomImage();
 }
 
 function handlerMode(event) {
