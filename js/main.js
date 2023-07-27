@@ -6,13 +6,20 @@ const timer = {
   longBreakInerval: 4,
   sessions: 0,
 };
-const images = ["/image/chill.jpg", "/image/samurai.jpg"];
-const imgEl = document.getElementById("random_image");
-
+const images = [
+  "/image/short_break.jpg",
+  "/image/work.jpg",
+  "/image/long_break.jpg",
+];
+const imgEl = document.getElementById("bg-image");
+const inputFile = document.getElementById("input-file");
+const modeButton = document.getElementById("js-mode-buttons");
+const mainButton = document.getElementById("js-btn");
+const uploadButton = document.getElementById("js-btn-upload");
 const buttonSound = new Audio("button-sound.mp3");
-const mainButtron = document.getElementById("js-btn");
-mainButtron.addEventListener("click", () => {
-  const { action } = mainButtron.dataset;
+// Start timer
+mainButton.addEventListener("click", () => {
+  const { action } = mainButton.dataset;
   buttonSound.play();
   if (action === "start") {
     startTimer();
@@ -20,16 +27,18 @@ mainButtron.addEventListener("click", () => {
     stopTimer();
   }
 });
-
-const modeButton = document.querySelector("#js-mode-buttons");
+// Change mode
 modeButton.addEventListener("click", handlerMode);
-
+// Upload your IMG on background
+inputFile.onchange = function () {
+  imgEl.src = URL.createObjectURL(inputFile.files[0]);
+};
 function getRemainingTimer(endTime) {
   let nowDate = new Date();
   const currentTime = Date.parse(nowDate);
-  const differenct = endTime - currentTime;
+  const different = endTime - currentTime;
 
-  const total = Number.parseInt(differenct / 1000, 10);
+  const total = Number.parseInt(different / 1000, 10);
   const hours = Number.parseInt((total / 60 / 60) % 60, 10);
   const minutes = Number.parseInt((total / 60) % 60, 10);
   const seconds = Number.parseInt(total % 60, 10);
@@ -52,9 +61,9 @@ function startTimer() {
 
   if (timer.mode === "work") timer.sessions++;
 
-  mainButtron.dataset.action = "stop";
-  mainButtron.textContent = "Stop";
-  mainButtron.classList.add("active");
+  mainButton.dataset.action = "stop";
+  mainButton.textContent = "Stop";
+  mainButton.classList.add("active");
 
   interval = setInterval(() => {
     timer.remainingTime = getRemainingTimer(endTime);
@@ -89,9 +98,9 @@ function startTimer() {
 function stopTimer() {
   clearInterval(interval);
 
-  mainButtron.dataset.action = "start";
-  mainButtron.textContent = "Start";
-  mainButtron.classList.remove("active");
+  mainButton.dataset.action = "start";
+  mainButton.textContent = "Start";
+  mainButton.classList.remove("active");
 }
 
 function updateClock() {
@@ -132,10 +141,7 @@ function switchMode(mode) {
     .querySelectorAll("button[data-mode]")
     .forEach((el) => el.classList.remove("active"));
   document.querySelector(`[data-mode= "${mode}"]`).classList.add("active");
-  imgEl.style.backgroundSize = "cover";
-  // TODO: put the pic in center
-  // imgEl.style.backgroundPositionX = 'top left'
-  // imgEl.style.backgroundAttachment = "fixed";
+  document.body.style.backgroundColor = `var(--${mode})`;
 
   document
     .getElementById("js-progress")
@@ -143,6 +149,7 @@ function switchMode(mode) {
 
   updateClock();
   randomImage();
+  getRemainingTimer(0);
 }
 
 function handlerMode(event) {

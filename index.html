@@ -9,8 +9,8 @@
   </head>
   <body src="">
     <main class="app">
-      <img id="random_image" class="img" src="" alt="Random Image" >
       <progress id="js-progress" value="0"></progress>
+      <img id="bg-image" class="img" src="" alt="Random Image" />
       <div class="progress-bar"></div>
 
       <div class="timer">
@@ -44,9 +44,13 @@
           <span class="separator">:</span>
           <span id="js-seconds">00</span>
         </div>
-        <button class="main-button" data-action="start" id="js-btn">
-          Start
-        </button>
+        <section class="btn">
+          <button class="main_button" data-action="start" id="js-btn">
+            Start
+          </button>
+          <label for="input-file" class="label_button"> Upload </label>
+          <input type="file" accept="image/work.jpg"  id="input-file" />
+        </section>
       </div>
     </main>
     <div class="hidden">
