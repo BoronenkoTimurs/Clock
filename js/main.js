@@ -32,6 +32,8 @@ modeButton.addEventListener("click", handlerMode);
 // Upload your IMG on background
 inputFile.onchange = function () {
   imgEl.src = URL.createObjectURL(inputFile.files[0]);
+  images.push(imgEl.src);
+  localStorage.setItem("image", images);
 };
 function getRemainingTimer(endTime) {
   let nowDate = new Date();
